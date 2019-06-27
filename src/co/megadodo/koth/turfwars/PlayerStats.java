@@ -6,6 +6,8 @@ public class PlayerStats {
     private double health, regenPerTurn;
 
     public PlayerStats(int startBlocks, int startAmmo, int shotCount, int range, double health, double regenPerTurn) {
+        if(shotCount>4)throw new Error("Shotcount cannot be more than 4.  Shotcount was "+shotCount+".  But nice try!");
+
         this.startBlocks = startBlocks;
         this.startAmmo = startAmmo;
         this.shotCount = shotCount;
