@@ -2,20 +2,20 @@ package co.megadodo.koth.turfwars;
 
 public class ActionDirectional implements Action {
 
-    private int x;
-    private int y;
+    private int dx;
+    private int dy;
 
-    public ActionDirectional(int x,int y){
-        this.x=x;
-        this.y=y;
+    public ActionDirectional(int dx,int dy){
+        this.dx=dx;
+        this.dy=dy;
     }
 
-    public int x(){
-        return x;
+    public int dx(){
+        return dx;
     }
 
-    public int y(){
-        return y;
+    public int dy(){
+        return dy;
     }
 
 }

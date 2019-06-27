@@ -5,7 +5,7 @@ public class CellType {
     public static final CellType EMPTY = new CellType();
     public static final CellType WOOL = new CellType();
 
-    private Player player=null;
+    public Player player=null;
 
     public PlayerStats playerStats(){
         if(player==null)return null;

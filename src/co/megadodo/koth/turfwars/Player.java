@@ -14,4 +14,7 @@ public abstract class Player {
         this.stats=stats;
     }
 
+    public abstract String name();
+    public abstract Action move(Board board);
+
 }
