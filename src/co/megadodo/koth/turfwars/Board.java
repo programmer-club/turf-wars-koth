@@ -12,8 +12,14 @@ public class Board {
 
     public CellType[][] board;
 
+    public int turnNumber = 0;
+
     // red = y<dividingLine
     // blue = y>=dividingLine
+
+    private interface PlayerInstantiator{
+        Player instantiate(int x,int y,Team team);
+    }
 
     public Board(){
         assert height % 2 == 0;
@@ -25,7 +31,23 @@ public class Board {
                 board[x][y]=CellType.EMPTY;
             }
         }
+
+        setupPlayers(new PlayerInstantiator[]{
+                PlayerRandom::new,
+        });
     }
+
+    private void setupPlayers(PlayerInstantiator[]instantiators){
+        for(int i=0;i<instantiators.length;i++){
+            int x_red=(int)(Math.random()*width);
+            int x_blue=(int)(Math.random()*width);
+            int y_red=2;
+            int y_blue=height-y_red-1;
+            board[x_red][y_red]=CellType.PLAYER(instantiators[i].instantiate(x_red,y_red,Team.RED));
+            board[x_blue][y_blue]=CellType.PLAYER(instantiators[i].instantiate(x_blue,y_blue,Team.BLUE));
+        }
+    }
+
 
     private class ActionPair{
         Action action;
@@ -41,6 +63,8 @@ public class Board {
     }
 
     public void runTurn(){
+        turnNumber++;
+
         List<ActionPair>actions=new ArrayList<>();
         for(int x=0;x<width;x++){
             for(int y=0;y<height;y++){
@@ -53,9 +77,29 @@ public class Board {
 
         for(ActionPair action : actions){
             // process action
+            processAction(action);
         }
+    }
 
+    private CellType get(int x,int y){
+        if(x<0||y<0||x>=width||y>=height)return CellType.EMPTY;
+        return board[x][y];
+    }
 
+    private void set(int x,int y,CellType c){
+        if(x<0||y<0||x>=width||y>=height)return;
+        board[x][y]=c;
+    }
+
+    private void processAction(ActionPair pair){
+        if(pair.action instanceof ActionPlace){
+            ActionPlace action=(ActionPlace)pair.action;
+            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.WOOL);
+        }
+        if(pair.action instanceof ActionDestroy){
+            ActionDestroy action=(ActionDestroy)pair.action;
+            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.WOOL)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.EMPTY);
+        }
     }
 
     public boolean isRed(int y){
