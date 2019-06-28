@@ -25,6 +25,10 @@ public class PlayerRandom extends Player {
         actions.add(new ActionDestroy(1,0));
         actions.add(new ActionDestroy(0,-1));
         actions.add(new ActionDestroy(0,1));
+        actions.add(new ActionMove(-1,0));
+        actions.add(new ActionMove(1,0));
+        actions.add(new ActionMove(0,-1));
+        actions.add(new ActionMove(0,1));
         return actions.get((int)(Math.random()*actions.size()));
     }
 

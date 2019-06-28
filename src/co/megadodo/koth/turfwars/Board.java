@@ -92,13 +92,36 @@ public class Board {
     }
 
     private void processAction(ActionPair pair){
-        if(pair.action instanceof ActionPlace){
-            ActionPlace action=(ActionPlace)pair.action;
-            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.WOOL);
-        }
-        if(pair.action instanceof ActionDestroy){
-            ActionDestroy action=(ActionDestroy)pair.action;
-            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.WOOL)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.EMPTY);
+//        if(pair.action instanceof ActionPlace){
+//            ActionPlace action=(ActionPlace)pair.action;
+//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.WOOL);
+//        }
+//        if(pair.action instanceof ActionDestroy){
+//            ActionDestroy action=(ActionDestroy)pair.action;
+//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.WOOL)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.EMPTY);
+//        }
+//        if(pair.action instanceof ActionMove){
+//            ActionMove action=(ActionMove)pair.action;
+//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY){
+//                int tx=action.dx()+pair.pla
+//            }
+//        }
+        if(pair.action instanceof ActionDirectional){
+            ActionDirectional action=(ActionDirectional)pair.action;
+            int tx=action.dx()+pair.playerX;
+            int ty=action.dy()+pair.playerY;
+            if(action instanceof ActionDestroy){
+                if(get(tx,ty)==CellType.WOOL)set(tx,ty,CellType.EMPTY);
+            } else if(action instanceof ActionPlace){
+                if(get(tx,ty)==CellType.EMPTY)set(tx,ty,CellType.WOOL);
+            } else if(action instanceof ActionMove){
+                if(get(tx,ty)==CellType.EMPTY){
+                    set(tx,ty,CellType.PLAYER(pair.player));
+                    set(pair.playerX,pair.playerY,CellType.EMPTY);
+                    pair.player.x=tx;
+                    pair.player.y=ty;
+                }
+            }
         }
     }
 
