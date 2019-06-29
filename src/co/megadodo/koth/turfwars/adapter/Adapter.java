@@ -5,6 +5,7 @@ import co.megadodo.koth.turfwars.adapter.decoder.Decoder;
 import co.megadodo.koth.turfwars.adapter.encoder.Encoder;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public abstract class Adapter extends Player {
     protected Language language;
@@ -32,7 +33,11 @@ public abstract class Adapter extends Player {
         Process p = r.exec(this.language + this.name);
         p.getOutputStream().write(encoder.encodeBoard(b));
 
-        return new String(p.getInputStream().readAllBytes());
+        InputStream is = p.getInputStream();
+        byte[] by = new byte[1024];
+        is.read(by);
+
+        return new String(by);
     }
 
     @Override
