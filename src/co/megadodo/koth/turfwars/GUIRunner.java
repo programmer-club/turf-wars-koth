@@ -1,6 +1,7 @@
 package co.megadodo.koth.turfwars;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class GUIRunner extends PApplet {
 
@@ -11,6 +12,8 @@ public class GUIRunner extends PApplet {
 
     public Board board;
 
+    private PImage img_red_wool,img_red_terracotta,img_blue_wool,img_blue_terracotta;
+
     public void settings(){
         size(1000,1000);
         board=new Board();
@@ -19,6 +22,11 @@ public class GUIRunner extends PApplet {
 
         tw=width/Board.width;
         th=height/Board.height;
+
+        img_red_wool=loadImage("red_wool.png");
+        img_red_terracotta=loadImage("red_terracotta.png");
+        img_blue_wool=loadImage("blue_wool.png");
+        img_blue_terracotta=loadImage("blue_terracotta.png");
     }
 
     private int tw;
@@ -53,11 +61,20 @@ public class GUIRunner extends PApplet {
         for(int x=0;x<Board.width;x++){
             for(int y=0;y<Board.height;y++){
                 int color=-1;
+                PImage img=null;
 
-                if(board.board[x][y]==CellType.WOOL)color=board.isBlueWool(x,y)?colorBlueWool:colorRedWool;
-                if(board.board[x][y].isPlayer())color=color(0,255,0);
+                if(board.board[x][y]==CellType.WOOL){
+                    img=board.isBlueWool(x,y)?img_blue_wool:img_red_wool;
+                }
+                else if(board.board[x][y].isPlayer())color=color(0,255,0);
+                else img=board.isBlue(y)?img_blue_terracotta:img_red_terracotta;
 
-                if(color==-1)continue;
+                if(color==-1){
+                    if(img!=null){
+                        image(img,x*tw,y*th,tw,th);
+                    }
+                    continue;
+                }
                 fill(color);
                 noStroke();
                 rect(x*tw,y*th,tw,th);

@@ -91,6 +91,10 @@ public class Board {
         board[x][y]=c;
     }
 
+    private boolean inBounds(int x,int y){
+        return x>=0&&y>=0&&x<width&&y<height;
+    }
+
     private void processAction(ActionPair pair){
 //        if(pair.action instanceof ActionPlace){
 //            ActionPlace action=(ActionPlace)pair.action;
@@ -115,14 +119,26 @@ public class Board {
             } else if(action instanceof ActionPlace){
                 if(get(tx,ty)==CellType.EMPTY)set(tx,ty,CellType.WOOL);
             } else if(action instanceof ActionMove){
-                if(get(tx,ty)==CellType.EMPTY){
+                if(get(tx,ty)==CellType.EMPTY&&inBounds(tx,ty)){
                     set(tx,ty,CellType.PLAYER(pair.player));
                     set(pair.playerX,pair.playerY,CellType.EMPTY);
                     pair.player.x=tx;
                     pair.player.y=ty;
                 }
             }
+        }else if(pair.action instanceof ActionShoot){
+            fireShot(pair.playerX,pair.playerY,forwardY(pair.player.team));
         }
+    }
+
+    private void fireShot(int fromX,int fromY,int dy){
+
+    }
+
+    private int forwardY(Team team){
+        if(team==Team.RED)return 1;
+        if(team==Team.BLUE)return -1;
+        return 0;
     }
 
     public boolean isRed(int y){

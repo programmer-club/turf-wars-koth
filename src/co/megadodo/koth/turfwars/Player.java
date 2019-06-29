@@ -5,13 +5,20 @@ public abstract class Player {
     public int x;
     public int y;
     public Team team;
-    public PlayerStats stats;
+    public PlayerStats initial_stats;
 
-    public Player(int startX, int startY,Team team,PlayerStats stats){
+    public int blocks, ammo;
+    public double health;
+
+    public Player(int startX, int startY,Team team,PlayerStats initial_stats){
         this.x = startX;
         this.y = startY;
         this.team = team;
-        this.stats=stats;
+        this.initial_stats=initial_stats;
+
+        blocks=initial_stats.startBlocks();
+        ammo=initial_stats.startAmmo();
+        health=initial_stats.health();
     }
 
     public abstract String name();
