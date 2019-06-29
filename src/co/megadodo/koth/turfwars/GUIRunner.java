@@ -12,7 +12,7 @@ public class GUIRunner extends PApplet {
 
     public Board board;
 
-    private PImage img_red_wool,img_red_terracotta,img_blue_wool,img_blue_terracotta;
+    private PImage img_red_wool,img_red_terracotta,img_blue_wool,img_blue_terracotta,img_steve_head;
 
     public void settings(){
         size(1000,1000);
@@ -27,6 +27,7 @@ public class GUIRunner extends PApplet {
         img_red_terracotta=loadImage("red_terracotta.png");
         img_blue_wool=loadImage("blue_wool.png");
         img_blue_terracotta=loadImage("blue_terracotta.png");
+        img_steve_head=loadImage("stevehead.png");
     }
 
     private int tw;
@@ -66,7 +67,11 @@ public class GUIRunner extends PApplet {
                 if(board.board[x][y]==CellType.WOOL){
                     img=board.isBlueWool(x,y)?img_blue_wool:img_red_wool;
                 }
-                else if(board.board[x][y].isPlayer())color=color(0,255,0);
+                else if(board.board[x][y].isPlayer()){
+//                    color=color(0,255,0);
+                    img=img_steve_head;
+
+                }
                 else img=board.isBlue(y)?img_blue_terracotta:img_red_terracotta;
 
                 if(color==-1){

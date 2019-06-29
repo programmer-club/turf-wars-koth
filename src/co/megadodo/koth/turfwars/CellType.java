@@ -9,7 +9,7 @@ public class CellType {
 
     public PlayerStats playerStats(){
         if(player==null)return null;
-        return player.stats;
+        return player.initial_stats;
     }
 
     private CellType(){
