@@ -21,6 +21,10 @@ public abstract class Player {
         health=initial_stats.health();
     }
 
+    public double damagePerShot(){
+        return (5.0-initial_stats.shotCount())/2.0;
+    }
+
     public abstract String name();
     public abstract Action move(Board board);
 

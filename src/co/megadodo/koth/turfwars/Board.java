@@ -34,6 +34,10 @@ public class Board {
 
         setupPlayers(new PlayerInstantiator[]{
                 PlayerRandom::new,
+                PlayerRandom::new,
+                PlayerRandom::new,
+                PlayerRandom::new,
+                PlayerRandom::new,
         });
     }
 
@@ -96,20 +100,6 @@ public class Board {
     }
 
     private void processAction(ActionPair pair){
-//        if(pair.action instanceof ActionPlace){
-//            ActionPlace action=(ActionPlace)pair.action;
-//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.WOOL);
-//        }
-//        if(pair.action instanceof ActionDestroy){
-//            ActionDestroy action=(ActionDestroy)pair.action;
-//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.WOOL)set(action.dx()+pair.playerX,action.dy()+pair.playerY,CellType.EMPTY);
-//        }
-//        if(pair.action instanceof ActionMove){
-//            ActionMove action=(ActionMove)pair.action;
-//            if(get(action.dx()+pair.playerX,action.dy()+pair.playerY)==CellType.EMPTY){
-//                int tx=action.dx()+pair.pla
-//            }
-//        }
         if(pair.action instanceof ActionDirectional){
             ActionDirectional action=(ActionDirectional)pair.action;
             int tx=action.dx()+pair.playerX;
@@ -127,12 +117,39 @@ public class Board {
                 }
             }
         }else if(pair.action instanceof ActionShoot){
-            fireShot(pair.playerX,pair.playerY,forwardY(pair.player.team));
+            for(int x=0;x<pair.player.initial_stats.shotCount();x++){
+                fireShot(pair.playerX,pair.playerY,forwardY(pair.player.team),pair.player.damagePerShot());
+            }
         }
     }
 
-    private void fireShot(int fromX,int fromY,int dy){
+    private void fireShot(int fromX,int fromY,int dy,double damagePerShot){
+        int x=fromX;
+        int y=fromY+dy;
+        while(true){
+            if(!inBounds(x,y))return;
+            if(get(x,y)!=CellType.EMPTY){
+                explodeCell(x,y, get(fromX,fromY).player, damagePerShot);
+                return;
+            }
+            y+=dy;
+        }
+    }
 
+    private void killPlayer(int x,int y,Player from){
+        Player player=get(x,y).player;
+        set(x,y,CellType.EMPTY);
+        System.out.println(player.name()+" was killed by "+from.name()+" with the help of Legolas.");
+    }
+
+    private void explodeCell(int x,int y,Player from,double damagePerShot){
+        CellType cell=get(x,y);
+        if (cell.isPlayer()){
+            cell.player.health-=damagePerShot;
+            if(cell.player.health<0)killPlayer(x,y,from);
+        }else if(cell==CellType.WOOL){
+            set(x,y,CellType.EMPTY);
+        }
     }
 
     private int forwardY(Team team){
