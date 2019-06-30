@@ -42,11 +42,16 @@ public class Board {
 //                PlayerRandom::new,
 //                PlayerRandom::new,
                 PlayerRandom::new,
-                (int x, int y, Team team) -> {
-                    return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 0.1F),
-                            Language.Python, "bots/python/sample.py");
-                }
+                createAdaptorBot(Language.Python, "bots/python/sample.py"),
+//                createAdaptorBot(Language.Python, "bots/python/chaos.py")
         });
+    }
+
+    private PlayerInstantiator createAdaptorBot(Language lang, String s) {
+        return (int x, int y, Team team) -> {
+            return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 0.1F),
+                    lang, s);
+        };
     }
 
     private void setupPlayers(PlayerInstantiator[]instantiators){

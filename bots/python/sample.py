@@ -18,7 +18,7 @@ with open("sample.log", "w") as f:
 
         width, height, line, turn, board = x
 
-        eprint("w =", width, ", h =", height, " dividing_line =", line, " turn =", turn)
+        # eprint("w =", width, ", h =", height, " dividing_line =", line, " turn =", turn)
 
         print("2 0 1")
     except Exception as e:
