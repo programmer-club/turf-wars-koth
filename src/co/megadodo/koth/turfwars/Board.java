@@ -112,6 +112,8 @@ public class Board {
             ActionDirectional action=(ActionDirectional)pair.action;
             int tx=action.dx()+pair.playerX;
             int ty=action.dy()+pair.playerY;
+            if(isRed(ty)&&pair.player.team==Team.BLUE)return;
+            if(isBlue(ty)&&pair.player.team==Team.RED)return;
             if(action instanceof ActionDestroy){
                 if(get(tx,ty)==CellType.WOOL)set(tx,ty,CellType.EMPTY);
             } else if(action instanceof ActionPlace){
