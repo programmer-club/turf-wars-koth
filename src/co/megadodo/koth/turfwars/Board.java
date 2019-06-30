@@ -37,13 +37,13 @@ public class Board {
         }
 
         setupPlayers(new PlayerInstantiator[]{
-                PlayerRandom::new,
-                PlayerRandom::new,
-                PlayerRandom::new,
-                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
                 PlayerRandom::new,
                 (int x, int y, Team team) -> {
-                    return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 100),
+                    return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 0.1F),
                             Language.Python, "bots/python/sample.py");
                 }
         });
@@ -91,6 +91,14 @@ public class Board {
             // process action
             processAction(action);
         }
+
+        for(int x=0;x<width;x++){
+            for(int y=0;y<height;y++){
+                if(board[x][y].isPlayer()){
+                    board[x][y].player.health+=board[x][y].player.initial_stats.regenPerTurn();
+                }
+            }
+        }
     }
 
     private CellType get(int x,int y){
@@ -114,10 +122,17 @@ public class Board {
             int ty=action.dy()+pair.playerY;
             if(isRed(ty)&&pair.player.team==Team.BLUE)return;
             if(isBlue(ty)&&pair.player.team==Team.RED)return;
+            Player player=pair.player;
             if(action instanceof ActionDestroy){
-                if(get(tx,ty)==CellType.WOOL)set(tx,ty,CellType.EMPTY);
+                if(get(tx,ty)==CellType.WOOL){
+                    set(tx,ty,CellType.EMPTY);
+                    player.blocks++;
+                }
             } else if(action instanceof ActionPlace){
-                if(get(tx,ty)==CellType.EMPTY)set(tx,ty,CellType.WOOL);
+                if(get(tx,ty)==CellType.EMPTY&&player.blocks>0){
+                    set(tx,ty,CellType.WOOL);
+                    player.blocks--;
+                }
             } else if(action instanceof ActionMove){
                 if(get(tx,ty)==CellType.EMPTY&&inBounds(tx,ty)){
                     set(tx,ty,CellType.PLAYER(pair.player));
@@ -126,7 +141,8 @@ public class Board {
                     pair.player.y=ty;
                 }
             }
-        }else if(pair.action instanceof ActionShoot){
+        }else if(pair.action instanceof ActionShoot&&pair.player.ammo>0){
+            pair.player.ammo--;
             for(int x=0;x<pair.player.initial_stats.shotCount();x++){
                 fireShot(pair.playerX,pair.playerY,forwardY(pair.player.team),pair.player.damagePerShot());
             }

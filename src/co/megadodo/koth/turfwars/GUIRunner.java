@@ -37,6 +37,12 @@ public class GUIRunner extends PApplet {
 //        frameRate(5);
     }
 
+    private void highlightColumn(int x){
+        noFill();
+        stroke(0);
+        rect(x*tw,0,tw,height);
+    }
+
     public void draw(){
         background(0);
 
@@ -48,17 +54,14 @@ public class GUIRunner extends PApplet {
 
 
         textAlign(RIGHT, TOP);
-        fill(0);
-        stroke(0);
+        fill(255);
+        noStroke();
         textSize(20);
         text("Turn #: "+board.turnNumber, width,0);
 
     }
 
     private void renderBoard(){
-        int colorRedWool=color(255,255/3,255/3);
-        int colorBlueWool=color(255/3,255/3,255);
-
         for(int x=0;x<Board.width;x++){
             for(int y=0;y<Board.height;y++){
                 int color=-1;
@@ -83,6 +86,13 @@ public class GUIRunner extends PApplet {
                 fill(color);
                 noStroke();
                 rect(x*tw,y*th,tw,th);
+            }
+        }
+        for(int x=0;x<Board.width;x++){
+            for(int y=0;y<Board.height;y++){
+                if(board.board[x][y].isPlayer()){
+                    highlightColumn(x);
+                }
             }
         }
     }

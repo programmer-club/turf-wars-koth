@@ -3,6 +3,11 @@ import os
 sys.path.insert(0, os.path.dirname(__file__))
 read_board = __import__("adaptor").read_board
 
+import sys
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 with open("sample.log", "w") as f:
     try:
         # import time
@@ -12,7 +17,9 @@ with open("sample.log", "w") as f:
 
         width, height, line, turn, board = x
 
-        print("2 0 1")
+        eprint("w =",width,", h =",height," dividing_line =",line," turn =",turn)
+
+        print("4 0 1")
     except Exception as e:
         f.write(str(e))
         f.close()
