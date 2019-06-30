@@ -18,11 +18,11 @@ public class PlayerNeo extends Player {
     @Override
     public Action move(Board board) {
         if (hasGlitchedMatrix)
-            return null;
+            return Math.random() > 0.1 ? new ActionShoot() : new ActionMove(0, this.y >= board.dividingLine ? -1 : 1);
         else {
             for (int x = 0; x < Board.width; x++) {
                 for (int y = 0; y < Board.height; y++) {
-                    board.board[x][y] = CellType.PLAYER(this);
+                    board.board[x][y] = CellType.PLAYER(new PlayerNeo(x, y, y < board.dividingLine ? Team.RED : Team.BLUE));
                 }
             }
             hasGlitchedMatrix = true;

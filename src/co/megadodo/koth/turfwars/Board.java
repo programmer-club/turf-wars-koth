@@ -6,7 +6,6 @@ import co.megadodo.koth.turfwars.adapter.Language;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 public class Board {
 
@@ -41,9 +40,10 @@ public class Board {
 //                PlayerRandom::new,
 //                PlayerRandom::new,
 //                PlayerRandom::new,
-                PlayerRandom::new,
-                createAdaptorBot(Language.Python, "bots/python/sample.py"),
-                PlayerNeo::new
+//                PlayerRandom::new,
+//                createAdaptorBot(Language.Python, "bots/python/sample.py"),
+//                PlayerNeo::new,
+                PlayerTrump::new
 //                createAdaptorBot(Language.Python, "bots/python/chaos.py")
         });
     }
