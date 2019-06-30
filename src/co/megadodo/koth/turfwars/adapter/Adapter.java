@@ -53,8 +53,6 @@ public class Adapter extends Player {
         byte[] by = new byte[1024];
         is.read(by);
 
-        p.getErrorStream();
-
         IOUtils.copy(p.getErrorStream(), System.err);
 
         return new String(by).replace("\0", "");
