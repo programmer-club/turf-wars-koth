@@ -147,9 +147,10 @@ public class Board {
     }
 
     private void killPlayer(int x,int y,Player from){
+        if(from==null)return;
         Player player=get(x,y).player;
         set(x,y,CellType.EMPTY);
-        System.out.println(player + " " + from);
+//        System.out.println(player + " " + from);
         System.out.println(player.name()+" was killed by "+from.name()+" with the help of Legolas.");
     }
 
