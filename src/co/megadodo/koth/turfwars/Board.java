@@ -43,6 +43,7 @@ public class Board {
 //                PlayerRandom::new,
                 PlayerRandom::new,
                 createAdaptorBot(Language.Python, "bots/python/sample.py"),
+                PlayerNeo::new
 //                createAdaptorBot(Language.Python, "bots/python/chaos.py")
         });
     }
