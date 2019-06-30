@@ -34,7 +34,7 @@ public class GUIRunner extends PApplet {
     private int th;
 
     public void setup(){
-        frameRate(5);
+//        frameRate(5);
     }
 
     public void draw(){

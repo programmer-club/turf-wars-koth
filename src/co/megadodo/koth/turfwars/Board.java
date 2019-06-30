@@ -1,8 +1,12 @@
 package co.megadodo.koth.turfwars;
 
+import co.megadodo.koth.turfwars.adapter.Adapter;
+import co.megadodo.koth.turfwars.adapter.Language;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 public class Board {
 
@@ -38,6 +42,10 @@ public class Board {
                 PlayerRandom::new,
                 PlayerRandom::new,
                 PlayerRandom::new,
+                (int x, int y, Team team) -> {
+                    return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 100),
+                            Language.Python, "bots/python/sample.py");
+                }
         });
     }
 
@@ -139,6 +147,7 @@ public class Board {
     private void killPlayer(int x,int y,Player from){
         Player player=get(x,y).player;
         set(x,y,CellType.EMPTY);
+        System.out.println(player + " " + from);
         System.out.println(player.name()+" was killed by "+from.name()+" with the help of Legolas.");
     }
 

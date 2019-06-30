@@ -1,0 +1,2 @@
+class Adaptor:
+    pass

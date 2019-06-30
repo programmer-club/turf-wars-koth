@@ -2,19 +2,26 @@ package co.megadodo.koth.turfwars.adapter.decoder;
 
 import co.megadodo.koth.turfwars.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class TextDecoder extends Decoder {
     @Override
     public Action decodeAction(String data) {
-        String[] arr = data.split(" ");
+        Pattern reg = Pattern.compile("\\d+");
 
         // 4 place
         // 4 destroy
         // 4 move
         // shoot
 
-        int moveType = Integer.parseInt(arr[0]);
-        int x = Integer.parseInt(arr[1]);
-        int y = Integer.parseInt(arr[2]);
+        Matcher m = reg.matcher(data);
+        m.find();
+        int moveType = Integer.parseInt(m.group());
+        m.find();
+        int x = Integer.parseInt(m.group());
+        m.find();
+        int y = Integer.parseInt(m.group());
         switch(moveType) {
             case 0: // place0
                 return new ActionPlace(x, y);
