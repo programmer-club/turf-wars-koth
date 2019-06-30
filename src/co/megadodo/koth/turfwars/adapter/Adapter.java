@@ -48,13 +48,14 @@ public class Adapter extends Player {
 
         Process p = r.exec(this.language.getCommand() + this.name);
         p.getOutputStream().write(encoder.encodeBoard(b));
+        p.getOutputStream().close();
 
         InputStream is = p.getInputStream();
         byte[] by = new byte[1024];
         is.read(by);
-
+//
         IOUtils.copy(p.getErrorStream(), System.err);
-
+//
         return new String(by).replace("\0", "");
     }
 
