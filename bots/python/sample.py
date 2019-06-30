@@ -20,7 +20,7 @@ with open("sample.log", "w") as f:
 
         eprint("w =", width, ", h =", height, " dividing_line =", line, " turn =", turn)
 
-        print("4 0 1")
+        print("2 0 1")
     except Exception as e:
         f.write(str(e))
         f.close()

@@ -28,20 +28,32 @@ public class BZipEncoder extends Encoder {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         BZip2CompressorOutputStream bz = new BZip2CompressorOutputStream(os);
 
-        bz.write(Board.width);
-        bz.write(Board.height);
-        bz.write(b.dividingLine);
-        bz.write(b.turnNumber);
+//        System.err.printf("w = %d , h = %d  dividing_line = %d  turn = %d (correct)\n", Board.width,
+//                Board.height,
+//                b.dividingLine,
+//                b.turnNumber);
+
+        writeInt(bz, Board.width);
+        writeInt(bz, Board.height);
+        writeInt(bz, b.dividingLine);
+        writeInt(bz, b.turnNumber);
 
         for (int x = 0; x < Board.width; x++) {
             for (int y = 0; y < Board.height; y++) {
-                bz.write(transformCell(x, y, b));
+                writeInt(bz, transformCell(x, y, b));
             }
         }
 
         bz.close();
 
         return os.toByteArray();
+    }
+
+    private void writeInt(BZip2CompressorOutputStream bz, int x) throws IOException {
+        bz.write(x >> 24);
+        bz.write(x >> 16);
+        bz.write(x >> 8);
+        bz.write(x);
     }
 
     private int transformCell(int x, int y, Board b) {
