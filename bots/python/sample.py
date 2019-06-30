@@ -8,7 +8,7 @@ with open("sample.log", "w") as f:
 
         width, height, line, turn, board = x
 
-        print("2 0 1")
+        print("4 0 1")
     except Exception as e:
         f.write(str(e))
         f.close()

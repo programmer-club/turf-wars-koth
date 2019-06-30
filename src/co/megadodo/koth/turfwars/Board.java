@@ -37,10 +37,10 @@ public class Board {
         }
 
         setupPlayers(new PlayerInstantiator[]{
-                PlayerRandom::new,
-                PlayerRandom::new,
-                PlayerRandom::new,
-                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
+//                PlayerRandom::new,
                 PlayerRandom::new,
                 (int x, int y, Team team) -> {
                     return new Adapter(x, y, team, new PlayerStats(5, 5, 4, 5, 5, 100),
