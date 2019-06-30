@@ -17,18 +17,18 @@ public class PlayerRandom extends Player {
     @Override
     public Action move(Board board) {
         List<Action>actions=new ArrayList<>();
-//        actions.add(new ActionPlace(-1,0));
-//        actions.add(new ActionPlace(1,0));
-//        actions.add(new ActionPlace(0,-1));
-//        actions.add(new ActionPlace(0,1));
-//        actions.add(new ActionDestroy(-1,0));
-//        actions.add(new ActionDestroy(1,0));
-//        actions.add(new ActionDestroy(0,-1));
-//        actions.add(new ActionDestroy(0,1));
+        actions.add(new ActionPlace(-1,0));
+        actions.add(new ActionPlace(1,0));
+        actions.add(new ActionPlace(0,-1));
+        actions.add(new ActionPlace(0,1));
+        actions.add(new ActionDestroy(-1,0));
+        actions.add(new ActionDestroy(1,0));
+        actions.add(new ActionDestroy(0,-1));
+        actions.add(new ActionDestroy(0,1));
         actions.add(new ActionMove(-1,0));
         actions.add(new ActionMove(1,0));
-//        actions.add(new ActionMove(0,-1));
-//        actions.add(new ActionMove(0,1));
+        actions.add(new ActionMove(0,-1));
+        actions.add(new ActionMove(0,1));
         actions.add(new ActionShoot());
         return actions.get((int)(Math.random()*actions.size()));
     }
