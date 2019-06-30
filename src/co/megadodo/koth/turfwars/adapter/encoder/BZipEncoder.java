@@ -5,6 +5,7 @@ import co.megadodo.koth.turfwars.CellType;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
@@ -15,13 +16,8 @@ public class BZipEncoder extends Encoder {
         try {
             byte[] bytea = new BZipEncoder().encodeBoard(b);
 
-            System.out.print("0x");
-            for (byte byt : bytea) {
-                System.out.print(Integer.toHexString(byt));
-            }
-            System.out.println();
-
-            System.out.println(Base64.getEncoder().encodeToString(bytea));
+            FileOutputStream f = new FileOutputStream("bots/python/sample.bz2");
+            f.write(bytea);
         } catch (IOException e) {
             e.printStackTrace();
         }

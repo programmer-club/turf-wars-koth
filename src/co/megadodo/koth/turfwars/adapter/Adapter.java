@@ -12,6 +12,7 @@ import java.io.InputStream;
 public class Adapter extends Player {
     protected Language language;
     protected String name;
+    private String realName;
 
     public static Encoder encoder = new BZipEncoder();
     public static Decoder decoder = new TextDecoder();
@@ -22,11 +23,23 @@ public class Adapter extends Player {
 
         this.language = language;
         this.name = name;
+
+        this.realName = this.language + removeSlashesAndExt(this.name);
+    }
+
+    private String removeSlashesAndExt(String name) {
+        String[] arr = name.split("/");
+        String curr = arr[arr.length - 1];
+        return titleCase(curr.replaceFirst("\\..+", ""));
+    }
+
+    private String titleCase(String replaceFirst) {
+        return (replaceFirst.charAt(0) + "").toUpperCase() + replaceFirst.substring(1).toLowerCase();
     }
 
     @Override
     public String name() {
-        return name;
+        return realName;
     }
 
     public String stringifiedAction(Board b) throws IOException {

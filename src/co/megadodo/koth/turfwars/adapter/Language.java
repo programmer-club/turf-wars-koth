@@ -1,7 +1,7 @@
 package co.megadodo.koth.turfwars.adapter;
 
 public enum Language {
-    Python("python "),
+    Python("python3 "),
     CPP("./"),
     Node("node ");
 

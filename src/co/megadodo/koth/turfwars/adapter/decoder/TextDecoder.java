@@ -16,11 +16,11 @@ public class TextDecoder extends Decoder {
         // shoot
 
         Matcher m = reg.matcher(data);
-        m.find();
+        if(!m.find()) return null;
         int moveType = Integer.parseInt(m.group());
-        m.find();
+        if(!m.find()) return null;
         int x = Integer.parseInt(m.group());
-        m.find();
+        if(!m.find()) return null;
         int y = Integer.parseInt(m.group());
         switch(moveType) {
             case 0: // place0
