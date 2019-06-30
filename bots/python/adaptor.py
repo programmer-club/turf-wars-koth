@@ -3,7 +3,8 @@ import typing
 
 
 def read_board(data: bytes) -> typing.Tuple[int, int, int, int, typing.List[int]]:
-    ret = [x for x in bz2.decompress(data)]
+    b = bz2.decompress(data)
+    ret = [x for x in b]
 
     return (
         ret[0],

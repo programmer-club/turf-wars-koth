@@ -5,6 +5,7 @@ import co.megadodo.koth.turfwars.adapter.decoder.Decoder;
 import co.megadodo.koth.turfwars.adapter.decoder.TextDecoder;
 import co.megadodo.koth.turfwars.adapter.encoder.BZipEncoder;
 import co.megadodo.koth.turfwars.adapter.encoder.Encoder;
+import org.apache.commons.compress.utils.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +52,10 @@ public class Adapter extends Player {
         InputStream is = p.getInputStream();
         byte[] by = new byte[1024];
         is.read(by);
+
+        p.getErrorStream();
+
+        IOUtils.copy(p.getErrorStream(), System.err);
 
         return new String(by).replace("\0", "");
     }
